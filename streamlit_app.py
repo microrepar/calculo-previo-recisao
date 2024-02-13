@@ -590,6 +590,8 @@ proventos_dict = {
         'AVISO PRÉVIO INDEN.',
         '-',
         '-',
+        'TOTAL DE VENCIMENTOS',
+        'LIQUÍDO DE RECISÃO',
 
     ],
     'Qtde.': [
@@ -605,6 +607,8 @@ proventos_dict = {
         f'{aviso_previo_inden_qtde}',
         f'{campo1_adicional_qtde}',
         f'{campo2_adicional_qtde}',
+        f'{">>>>"}',
+        f'{">>>>"}',
 
     ],
     'Valor': [
@@ -620,6 +624,8 @@ proventos_dict = {
         aviso_previo_inden_valor,
         campo1_adicional_valor,
         campo2_adicional_valor,
+        total_vencimentos,
+        liquido_de_rescisao,
     ],
 }
 
@@ -648,6 +654,7 @@ descontos_dict = {
         '-',
         '-',
         '-',
+        'TOTAL DE DESCONTOS',
     ],
     'Qtde.': [
         f'{inss_sobre_saldo_salario_qtde*100:.2f}%',
@@ -663,6 +670,7 @@ descontos_dict = {
         '-',
         '-',
         '-',
+        '>>>>',
     ],
     'Valor': [
         inss_sobre_saldo_salario_valor,
@@ -678,6 +686,7 @@ descontos_dict = {
         0.0,
         0.0,
         0.0,
+        total_descontos,
     ],
 }
 
