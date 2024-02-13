@@ -638,7 +638,7 @@ df_proventos['Valor'] = df_proventos['Valor'].map(format_currency)
 # Função para estilizar as células do último registro
 def highlight_last_row(row):
     if 'TOTAL' in row['Parâmetro'] or 'LIQU' in row['Parâmetro']:
-        return ['background-color: #454545']*len(row)
+        return ['background-color: #454545', 'color: white']*len(row)
     else:
         return ['']*len(row)
 
