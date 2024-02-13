@@ -860,7 +860,7 @@ resultado_da_rescisao = sum(
 
 # print('RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO:', resultado_da_rescisao)
 
-st.markdown(f'#### RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO: R$ {resultado_da_rescisao}')
+st.markdown(f'#### RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO: R$ {resultado_da_rescisao:,.2f}')
 
 # ## RESUMO DE CÁLCULO DE RECISÃO
 
