@@ -1,8 +1,13 @@
-import streamlit as st
-import datetime
 import calendar
+import datetime
+import locale
 import math
+
 import pandas as pd
+import streamlit as st
+
+# Configura a localização para o Brasil
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # ## Dados de entrada
 
@@ -622,7 +627,11 @@ proventos_dict = {
     ],
 }
 
+def format_currency(value):
+    return locale.currency(value, grouping=True)
+
 df_proventos = pd.DataFrame(proventos_dict)
+df_proventos['Valor'] = df_proventos['Valor'].map(format_currency)
 
 with col1:
     st.dataframe(df_proventos, hide_index=True, use_container_width=True)
@@ -667,16 +676,17 @@ descontos_dict = {
         desconto_aviso_previo_valor,
         atrasos_faltas_valor,
         adiantamentos_valor,
-        '-',
-        '-',
-        '-',
-        '-',
-        '-',
-        '-',
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
     ],
 }
 
 df_descontos = pd.DataFrame(descontos_dict)
+df_descontos['Valor'] = df_descontos['Valor'].map(format_currency)
 
 with col2:
     st.dataframe(df_descontos, hide_index=True, use_container_width=True)
@@ -698,7 +708,7 @@ FGTS_DEPOSITADO = col1.number_input('FGTS DEPOSITADO', step=50., format='%.2f', 
 with col1:
     col_inner = st.columns([1.5,1])
 
-grrf_selected = col_inner[0].selectbox('', GRRF_OPTIONS.keys(), index=1)
+grrf_selected = col_inner[0].selectbox('GRRF', GRRF_OPTIONS.keys(), index=1)
 GRRF = GRRF_OPTIONS[grrf_selected]
 
 
@@ -738,7 +748,7 @@ total_guia_grfc = sum([
 # print('total_conta_fgts: ', total_conta_fgts)
 # print('total_guia_grfc:  ', total_guia_grfc)
 
-col_inner[1].text_input('', value=f'{calculo_grrf}', disabled=True)
+col_inner[1].text_input('Cálculo GRRF', value=f'{calculo_grrf}', disabled=True)
 
 df_fgts = pd.DataFrame(
     {
@@ -756,6 +766,8 @@ df_fgts = pd.DataFrame(
         ],
     }
 )
+
+df_fgts['Valor'] = df_fgts['Valor'].map(format_currency)
 
 col1.dataframe(df_fgts, hide_index=True, use_container_width=True)
 
@@ -809,6 +821,13 @@ df_seguro = pd.DataFrame(
         ],
     }
 )
+
+def format_currency(row):
+    if row.name != 1:
+        return locale.currency(row['Valor'], grouping=True)
+    return int(row['Valor'])
+
+df_seguro['Valor'] = df_seguro.apply(lambda row: format_currency(row), axis=1)
 
 col2.dataframe(df_seguro, hide_index=True, use_container_width=True)
 
