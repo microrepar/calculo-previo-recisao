@@ -1,13 +1,9 @@
 import calendar
 import datetime
-import locale
 import math
 
 import pandas as pd
 import streamlit as st
-
-# Configura a localização para o Brasil
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # ## Dados de entrada
 
@@ -628,7 +624,7 @@ proventos_dict = {
 }
 
 def format_currency(value):
-    return locale.currency(value, grouping=True)
+    return 'R$ {:,.2f}'.format(value).replace(',', '_').replace('.', ',').replace('_', '.')
 
 df_proventos = pd.DataFrame(proventos_dict)
 df_proventos['Valor'] = df_proventos['Valor'].map(format_currency)
@@ -824,7 +820,7 @@ df_seguro = pd.DataFrame(
 
 def format_currency(row):
     if row.name != 1:
-        return locale.currency(row['Valor'], grouping=True)
+        return 'R$ {:,.2f}'.format(row['Valor']).replace(',', '_').replace('.', ',').replace('_', '.')
     return int(row['Valor'])
 
 df_seguro['Valor'] = df_seguro.apply(lambda row: format_currency(row), axis=1)
