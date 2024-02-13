@@ -635,8 +635,18 @@ def format_currency(value):
 df_proventos = pd.DataFrame(proventos_dict)
 df_proventos['Valor'] = df_proventos['Valor'].map(format_currency)
 
+# Função para estilizar as células do último registro
+def highlight_last_row(row):
+    if 'TOTAL' in row['Parâmetro'] or 'LIQU' in row['Parâmetro']:
+        return ['background-color: #454545']*len(row)
+    else:
+        return ['']*len(row)
+
+# Exibe o DataFrame com o estilo aplicado
+styled_df = df_proventos.style.apply(highlight_last_row, axis=1)
+
 with col1:
-    st.dataframe(df_proventos, hide_index=True, use_container_width=True)
+    st.dataframe(styled_df, hide_index=True, use_container_width=True)
 
 
 descontos_dict = {
@@ -693,8 +703,9 @@ descontos_dict = {
 df_descontos = pd.DataFrame(descontos_dict)
 df_descontos['Valor'] = df_descontos['Valor'].map(format_currency)
 
+styled_df = df_descontos.style.apply(highlight_last_row, axis=1)
 with col2:
-    st.dataframe(df_descontos, hide_index=True, use_container_width=True)
+    st.dataframe(styled_df, hide_index=True, use_container_width=True)
 st.divider()
 
 # ### CÁLCULO DE MULTA DO FGTS
@@ -757,7 +768,7 @@ col_inner[1].text_input('Cálculo GRRF', value=f'{calculo_grrf}', disabled=True)
 
 df_fgts = pd.DataFrame(
     {
-        'Campo': [
+        'Parâmetro': [
             'FGTS (VENCIMENTOS)',
             'FGTS (AVISO PRÉVIO)',
             'TOTAL CONTA FGTS',
@@ -774,7 +785,10 @@ df_fgts = pd.DataFrame(
 
 df_fgts['Valor'] = df_fgts['Valor'].map(format_currency)
 
-col1.dataframe(df_fgts, hide_index=True, use_container_width=True)
+# Exibe o DataFrame com o estilo aplicado
+styled_df = df_fgts.style.apply(highlight_last_row, axis=1)
+
+col1.dataframe(styled_df, hide_index=True, use_container_width=True)
 
 # ### CÁLCULO DE SEGURO DESEMPREGO
 
@@ -812,7 +826,7 @@ total_seguro_desemprego = round(0.0 if MOTIVO != 1 else numero_parcelas * valor_
 
 df_seguro = pd.DataFrame(
     {
-        'Campo': [
+        'Parâmetro': [
             'MÉDIA SALARIAL',
             'PARCELAS',
             'VALOR POR PARCELA',
@@ -834,7 +848,10 @@ def format_currency(row):
 
 df_seguro['Valor'] = df_seguro.apply(lambda row: format_currency(row), axis=1)
 
-col2.dataframe(df_seguro, hide_index=True, use_container_width=True)
+# Exibe o DataFrame com o estilo aplicado
+styled_df = df_seguro.style.apply(highlight_last_row, axis=1)
+
+col2.dataframe(styled_df, hide_index=True, use_container_width=True)
 
 # In[ ]:
 resultado_da_rescisao = sum(
@@ -843,7 +860,7 @@ resultado_da_rescisao = sum(
 
 # print('RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO:', resultado_da_rescisao)
 
-st.markdown(f'### RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO: R$ {resultado_da_rescisao}')
+st.markdown(f'#### RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO: R$ {resultado_da_rescisao}')
 
 # ## RESUMO DE CÁLCULO DE RECISÃO
 
