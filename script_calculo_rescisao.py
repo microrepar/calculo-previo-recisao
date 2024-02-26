@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
 
 
 import datetime
@@ -9,10 +8,6 @@ import calendar
 import math
 
 # ## Dados de entrada
-
-# In[12]:
-
-
 QTDE_DIAS_MES = 30
 EMPRESA = ''
 FUNCIONARIO = ''
@@ -51,7 +46,6 @@ DEPENDENTES = 0
 
 # ### Tabela contribuição INSS
 
-# In[13]:
 
 
 TABELA_INSS = {
@@ -87,7 +81,6 @@ def get_valor_contribuicao_inss(valor_base: float):
 
 # ### Tabela de dedução IRRF
 
-# In[14]:
 
 
 TABELA_IRRF = {
@@ -125,7 +118,6 @@ def get_deducao_irrf(valor_base):
 
 # ### TABELA DE SEGURO DESEMPREGO
 
-# In[15]:
 
 
 TABELA_SEGURO_DESEMPREGO = {
@@ -166,7 +158,6 @@ def get_valor_por_parcela_seg(valor_base):
 
 # ### Datas
 
-# In[16]:
 
 
 DIA_ADMISSAO = DATA_ADMISSAO.day
@@ -179,7 +170,6 @@ ANO_DEMISSAO = DATA_DEMISSAO.year
 
 # ## Proventos
 
-# In[17]:
 
 
 lista_vencimentos = []
@@ -191,7 +181,6 @@ campo2_adicional_valor = 0
 lista_vencimentos.append(campo1_adicional_valor)
 lista_vencimentos.append(campo2_adicional_valor)
 
-# In[18]:
 
 
 
@@ -213,7 +202,6 @@ lista_vencimentos.append(saldo_de_salario_valor)
 
 print('saldo_de_salario:', saldo_de_salario_qtde, saldo_de_salario_valor)
 
-# In[19]:
 
 
 def get_salario_proporcional_13_qtde(salario_qtde):
@@ -242,7 +230,6 @@ lista_vencimentos.append(salario_proporcional_13_valor)
 
 print('salario_proporcional_13:', f'{salario_proporcional_13_qtde}/12', f'{salario_proporcional_13_valor:.2f}')
 
-# In[20]:
 
 
 salario_variavel_13_qtde = get_salario_proporcional_13_qtde(saldo_de_salario_qtde)
@@ -251,7 +238,6 @@ lista_vencimentos.append(salario_variavel_13_valor)
 
 print('salario_variavel_13:', f'{salario_variavel_13_qtde}/12', salario_variavel_13_valor)
 
-# In[21]:
 
 
 if MOTIVO != 1 or AVISO_PREVIO != 1:
@@ -265,7 +251,6 @@ lista_vencimentos.append(salario_indenizado_13_valor)
 
 print('salario_indenizado_13', F'{salario_indenizado_13_qtde:0>2}/12', round(salario_indenizado_13_valor,2))
 
-# In[22]:
 
 
 ferias_vencidas_qtde = None
@@ -281,7 +266,6 @@ lista_vencimentos.append(ferias_vencidas_valor)
 
 print('ferias_vencidas:', ferias_vencidas_qtde, ferias_vencidas_valor)
 
-# In[23]:
 
 
 def get_ferias_proporcionais_qtde():
@@ -324,7 +308,6 @@ def get_ferias_proporcionais_qtde():
     
     return resultado_final
 
-# In[24]:
 
 
 ferias_proporcionais_qtde = get_ferias_proporcionais_qtde()
@@ -333,7 +316,6 @@ lista_vencimentos.append(ferias_proporcionais_valor)
 
 print('ferias_proporcionais:', f'{ferias_proporcionais_qtde}/12', ferias_proporcionais_valor)
 
-# In[25]:
 
 
 ferias_indenizadas_qtde = salario_indenizado_13_qtde
@@ -342,7 +324,6 @@ lista_vencimentos.append(ferias_indenizadas_valor)
 
 print('ferias_indenizadas:', ferias_indenizadas_qtde, ferias_indenizadas_valor)
 
-# In[26]:
 
 
 um_terco_sobre_ferias_qtde = '01/03'
@@ -351,7 +332,6 @@ lista_vencimentos.append(um_terco_sobre_ferias_valor)
 
 print('um_terco_sobre_ferias:', um_terco_sobre_ferias_qtde, um_terco_sobre_ferias_valor)
 
-# In[27]:
 
 
 qtde_horas = int(HORAS_EXTRAS_QUANTIDADE)
@@ -367,7 +347,6 @@ lista_vencimentos.append(horas_extras_100_valor)
 print('horas_extras_50: ', HORAS_EXTRAS_QUANTIDADE, horas_extras_50_valor)
 print('horas_extras_100:', HORA_EXTRA_100, horas_extras_100_valor)
 
-# In[28]:
 
 
 def get_aviso_previo_inden_valor():
@@ -382,7 +361,6 @@ def get_aviso_previo_inden_valor():
     result = (salario_base_por_30 * (qtde_anos_arredondado_acima * 3)) + salario_base_mais_medias_he
     return result
 
-# In[29]:
 
 
 aviso_previo_inden_qtde = 0
@@ -395,18 +373,15 @@ lista_vencimentos.append(aviso_previo_inden_valor)
 
 print('aviso_previo_inden:', aviso_previo_inden_qtde, aviso_previo_inden_valor)
 
-# In[30]:
 
 
 total_vencimentos = round(sum(lista_vencimentos), 2)
 
 print('total_vencimentos:', total_vencimentos)
 
+
+
 # ## Descontos
-
-# In[31]:
-
-
 lista_descontos = []
 lista_vencimento_base_calc_inss = [
     saldo_de_salario_valor,
@@ -419,7 +394,6 @@ lista_vencimento_base_calc_inss = [
 valor_base_calculo_inss = sum(lista_vencimento_base_calc_inss)
 valor_base_calculo_13 = sum([salario_proporcional_13_valor, salario_variavel_13_valor])
 
-# In[32]:
 
 
 inss_sobre_saldo_salario_qtde = get_percentual_contribuicao_inss(valor_base_calculo_inss)
@@ -428,7 +402,6 @@ lista_descontos.append(inss_sobre_saldo_salario_valor)
 
 print('inss_sobre_saldo_salario:', inss_sobre_saldo_salario_qtde, inss_sobre_saldo_salario_valor)
 
-# In[33]:
 
 
 qtde_horas = int(ATRASOS_FALTAS)
@@ -442,7 +415,6 @@ lista_descontos.append(atrasos_faltas_valor)
 
 print('atrasos_faltas:', atrasos_faltas_qtde, atrasos_faltas_valor)
 
-# In[34]:
 
 
 lista_vencimentos_base_calc_irrf = [
@@ -467,7 +439,6 @@ if DEPENDENTES > 5 :
 else:
     valor_base_calculo_irrf_sobre_13 = sum(lista_vencimentos_13_base_calc_irrf) - (DEPENDENTES * TABELA_IRRF[6][1])
 
-# In[35]:
 
 
 inss_sobre_salario_13_qtde = get_percentual_contribuicao_inss(valor_base_calculo_13)
@@ -476,7 +447,6 @@ lista_descontos.append(inss_sobre_salario_13_valor)
 
 print('inss_sobre_salario_13:', inss_sobre_salario_13_qtde, inss_sobre_salario_13_valor)
 
-# In[36]:
 
 
 def get_valor_irrf(valor_base: float):
@@ -491,7 +461,6 @@ lista_descontos.append(irrf_sobre_salario_valor)
 
 print('irrf_sobre_salario:', irrf_sobre_salario_qtde, irrf_sobre_salario_valor)
 
-# In[37]:
 
 
 irrf_sobre_salario_13_qtde = get_percentual_irrf(valor_base_calculo_irrf_sobre_13)
@@ -500,7 +469,6 @@ lista_descontos.append(irrf_sobre_salario_13_valor)
 
 print('irrf_sobre_salario_13:', irrf_sobre_salario_13_qtde, irrf_sobre_salario_13_valor)
 
-# In[38]:
 
 
 desconto_aviso_previo_qtde = 0
@@ -514,14 +482,12 @@ lista_descontos.append(desconto_aviso_previo_valor)
 
 print('desconto_aviso_previo:', desconto_aviso_previo_qtde, desconto_aviso_previo_valor)
 
-# In[39]:
 
 
 adiantamentos_qtde = 0
 adiantamentos_valor = 0.0
 lista_descontos.append(adiantamentos_valor)
 
-# In[40]:
 
 
 total_descontos = round(sum(lista_descontos), 2)
@@ -531,7 +497,6 @@ print('total_descontos:', total_descontos)
 
 # ### LÍQUIDO DE RECISÃO
 
-# In[41]:
 
 
 liquido_de_rescisao = total_vencimentos - total_descontos
@@ -542,7 +507,6 @@ print('LIQUÍDO DE RECISÃO:  ', liquido_de_rescisao)
 
 # ### CÁLCULO DE MULTA DO FGTS
 
-# In[42]:
 
 
 GRRF = {
@@ -552,7 +516,6 @@ GRRF = {
 
 FGTS_DEPOSITADO = 1000.0
 
-# In[43]:
 
 
 lista_base_calculo_fgts_vencimento = [
@@ -567,7 +530,6 @@ lista_base_calculo_fgts_vencimento = [
 
 valor_base_calculo_fgts_vencimento = sum(lista_base_calculo_fgts_vencimento)
 
-# In[44]:
 
 
 calculo_grrf = round(0.0 if MOTIVO !=1 else FGTS_DEPOSITADO * GRRF, 2)
@@ -591,7 +553,6 @@ print('total_guia_grfc:  ', total_guia_grfc)
 
 # ### CÁLCULO DE SEGURO DESEMPREGO
 
-# In[45]:
 
 
 MAPA_PARCELAS_SEGURO = {
@@ -610,7 +571,6 @@ def get_numero_parcelas():
 valor_media_salarial_base_calculo = SALARIO_BASE + MEDIAS_HORA_EXTRA
 
 
-# In[46]:
 
 
 media_salarial = 0.0 if MOTIVO != 1 else valor_media_salarial_base_calculo
@@ -623,7 +583,6 @@ print('numero_parcelas:        ', numero_parcelas)
 print('valor_por_parcela:      ', valor_por_parcela)
 print('total_seguro_desemprego:', total_seguro_desemprego)
 
-# In[47]:
 
 
 resultado_da_rescisao = sum(
@@ -634,7 +593,6 @@ print('RESCISÃO + MULTA FGTS + SEGURO DESEMPREGO:', resultado_da_rescisao)
 
 # ## RESUMO DE CÁLCULO DE RECISÃO
 
-# In[48]:
 
 
 total_grf_parte_funcionario = sum([calculo_grrf*80/100, fgts_vencimentos, fgts_aviso_previo])
